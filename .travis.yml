@@ -1,0 +1,29 @@
+language: verilog 
+
+before_install:
+# yosys dependencies
+    - sudo apt-get install build-essential clang bison flex libreadline-dev \
+     gawk tcl-dev libffi-dev git mercurial graphviz   \
+     xdot pkg-config python python3 libftdi-dev gperf \
+     libboost-program-options-dev autoconf libgmp-dev \
+     cmake
+install:
+    - git clone https://github.com/cliffordwolf/yosys.git yosys
+    - cd yosys
+    - make -j$(nproc)
+    - sudo make install
+
+script:
+    - "echo $PWD"
+    - "echo $HOME"
+    - "ls $PWD"
+    - make spi_formal
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
+
