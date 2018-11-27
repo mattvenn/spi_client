@@ -1,27 +1,68 @@
 language: verilog 
 
-before_install:
-# yosys dependencies
-    - sudo apt-get install build-essential clang bison flex libreadline-dev
-    - sudo apt-get install gawk tcl-dev libffi-dev git mercurial graphviz
-    - sudo apt-get install xdot pkg-config python python3 libftdi-dev gperf
-    - sudo apt-get install libboost-program-options-dev autoconf libgmp-dev
-    - sudo apt-get install cmake
+addons:
+    apt:
+        packages:
+            - build-essential 
+            - clang 
+            - bison 
+            - flex 
+            - libreadline-dev
+            - gawk 
+            - tcl-dev 
+            - libffi-dev 
+            - git 
+            - mercurial 
+            - graphviz
+            - xdot
+            - pkg-config 
+            - python 
+            - python3 
+            - libftdi-dev 
+            - gperf
+            - libboost-program-options-dev 
+            - autoconf 
+            - libgmp-dev
+            - cmake
 
 install:
+    # yosys
+    - cd $HOME
     - git clone https://github.com/cliffordwolf/yosys.git yosys
     - cd yosys
-    - make -j$(nproc)
+    - make -j2
+    - sudo make install
+    
+    # symbiyosys
+    - cd $HOME
+    - git clone https://github.com/cliffordwolf/SymbiYosys.git SymbiYosys
+    - cd SymbiYosys
+    - sudo make install
+
+    # yices2
+    - cd $HOME
+    - git clone https://github.com/SRI-CSL/yices2.git yices2
+    - cd yices2
+    - autoconf
+    - ./configure
+    - make -j2
+    - sudo make install
+    
+    # z3
+    - cd $HOME
+    - git clone https://github.com/Z3Prover/z3.git z3
+    - cd z3
+    - python scripts/mk_make.py
+    - cd build
+    - make -j2
     - sudo make install
 
 script:
+    - cd $HOME/spi_client
     - "echo $PWD"
     - "echo $HOME"
     - "ls $PWD"
     - make spi_formal
-
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
 
 notifications:
   email:
