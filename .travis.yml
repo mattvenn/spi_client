@@ -1,9 +1,31 @@
 language: verilog 
 
+addons:
+    apt:
+        packages:
+            - build-essential 
+            - clang 
+            - bison 
+            - flex 
+            - libreadline-dev
+            - gawk 
+            - tcl-dev 
+            - libffi-dev 
+            - git 
+            - mercurial 
+            - graphviz
+            - xdot
+            - pkg-config 
+            - python 
+            - python3 
+            - libftdi-dev 
+            - gperf
+            - libboost-program-options-dev 
+            - autoconf 
+            - libgmp-dev
+            - cmake
 
 install:
-    - echo $TRAVIS_BUILD_DIR
-    - echo $TRAVIS_REPO_SLUG
 
     # yosys
     - cd $HOME
@@ -37,10 +59,8 @@ install:
     - sudo make install
 
 script:
-    - cd $HOME/mattvenn/spi_client
-    - "echo $PWD"
-    - "echo $HOME"
-    - "ls $PWD"
+    - cd $TRAVIS_BUILD_DIR
+    - ls
     - make spi_formal
 
 notifications:
