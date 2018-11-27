@@ -61,7 +61,7 @@ install:
 script:
     - cd $TRAVIS_BUILD_DIR
     - ls
-    - make spi_formal
+    - make formal_spi
 
 notifications:
   email:
