@@ -5,6 +5,11 @@ cache:
     - ~/toolchain
     - ~/src
 
+addons:
+  apt:
+    packages:
+    - gperf
+
 before_install:
 install:
     # check if there's an update
