@@ -10,15 +10,11 @@ test:
 clean:
 	$(MAKE) -C verilog clean
 
-GIT_ICEST:=https://github.com/cliffordwolf/icestorm.git
 GIT_YOSYS:=https://github.com/cliffordwolf/yosys.git
-GIT_ARACH:=https://github.com/cseed/arachne-pnr.git
 GIT_SYMBI:=https://github.com/cliffordwolf/SymbiYosys.git
 GIT_YICES:=https://github.com/SRI-CSL/yices2.git
 
-VER_ICEST:=$(TARGETDIR)/icestorm.ver
 VER_YOSYS:=$(TARGETDIR)/yosys.ver
-VER_ARACH:=$(TARGETDIR)/arachne-pnr.ver
 VER_SYMBI:=$(TARGETDIR)/symbiyosys.ver
 VER_YICES:=$(TARGETDIR)/yices2.ver
 
@@ -27,7 +23,7 @@ check_latest:
 	[ -e $(VER_SYMBI) ] && ( git ls-remote --heads $(GIT_SYMBI) refs/heads/master | cut -f1 | cmp $(VER_SYMBI) - || rm -f $(VER_SYMBI) ) || true
 	[ -e $(VER_YICES) ] && ( git ls-remote --heads $(GIT_YICES) refs/heads/master | cut -f1 | cmp $(VER_YICES) - || rm -f $(VER_YICES) ) || true	
 
-ci-deps: $(VER_ICEST) $(VER_YOSYS) $(VER_ARACH) $(VER_SYMBI) $(VER_YICES)
+ci-deps: $(VER_YOSYS) $(VER_SYMBI) $(VER_YICES)
 
 ifndef TRAVIS
   NPROC:= -j$(shell nproc)
