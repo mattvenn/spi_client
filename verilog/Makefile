@@ -1,6 +1,6 @@
 SHELL = bash
 
-all: formal_spi
+test: formal_spi
 
 formal_spi: spi_client.v
 	sby -f spi.sby
